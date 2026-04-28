@@ -1,0 +1,16 @@
+tensorflow
+opencv-python-headless
+easyocr
+pandas
+numpy
+tqdm
+matplotlib
+flask
+tf-explain
+paddlepaddle
+paddleocr
+scikit-learn
+seaborn
+torch
+torchvision
+ipykernel

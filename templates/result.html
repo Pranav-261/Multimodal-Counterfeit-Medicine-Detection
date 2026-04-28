@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Prediction Result</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #333; }
+        img { max-width: 80%; height: auto; margin-top: 15px; border: 1px solid #ddd; border-radius: 4px;}
+        .result-box { margin-top: 20px; padding: 15px; border-radius: 5px; font-size: 1.2em; }
+        .authentic { background-color: #dff0d8; color: #3c763d; }
+        .counterfeit { background-color: #f2dede; color: #a94442; }
+        .details { margin-top: 15px; font-size: 0.9em; color: #555; text-align: left; padding: 10px; border-top: 1px solid #eee;}
+        a { display: inline-block; margin-top: 20px; padding: 10px 15px; background-color: #5bc0de; color: white; text-decoration: none; border-radius: 4px; }
+        a:hover { background-color: #31b0d5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+
+        <!-- Display the uploaded image -->
+        {% if image_filename %}
+            <img src="{{ url_for('uploaded_file', filename=image_filename) }}" alt="Uploaded Medicine Image">
+        {% endif %}
+
+        <!-- Display the prediction -->
+        {% if prediction_class %}
+            <div class="result-box {{ prediction_class.lower() }}">
+                Prediction: <strong>{{ prediction_class }}</strong>
+                <br>
+                Confidence: {{ "%.2f"|format(confidence) }}%
+            </div>
+            <div class="details">
+                <strong>Image File:</strong> {{ image_filename }}<br>
+                <strong>Text Detected (Used):</strong> {{ ocr_text }}<br>
+                <strong>Raw Probabilities [C, A]:</strong> {{ prediction_raw }}<br>
+                <strong>Inference Time:</strong> {{ "%.4f"|format(inference_time) }} seconds
+            </div>
+        {% else %}
+            <div class="result-box counterfeit"> <!-- Default to error style -->
+                <strong>Error during prediction:</strong> {{ error_message }}
+            </div>
+        {% endif %}
+
+        <a href="/">Check Another Image</a>
+    </div>
+</body>
+</html>
